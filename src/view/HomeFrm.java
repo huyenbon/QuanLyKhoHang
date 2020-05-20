@@ -34,16 +34,16 @@ public class HomeFrm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Quan ly kho hang");
+        jLabel1.setText("Quản lý kho hàng");
 
-        jButton1.setText("Quan ly san pham");
+        jButton1.setText("Quản lý sản phẩm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Quan ly nhap, xuat kho");
+        jButton2.setText("Quản lý nhập, xuất kho");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
