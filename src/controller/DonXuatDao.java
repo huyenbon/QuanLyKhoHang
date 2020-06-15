@@ -127,4 +127,34 @@ public class DonXuatDao extends Dao {
         }
         return false;
     }
+
+    public ArrayList<DonXuat> thongKeBaoCao(int ngay, int thang, int nam) {
+        ArrayList<DonXuat> danhsach = new ArrayList<>();
+        String sql = "SELECT don_xuat.ma_don_xuat, SUM(don_gia_xuat * so_luong_xuat) 'tong_tien' "
+                + "FROM don_xuat INNER JOIN ct_don_xuat ON don_xuat.ma_don_xuat = ct_don_xuat.ma_don_xuat "
+                + "WHERE DAY(don_xuat.ngay_xuat) = ? AND MONTH(don_xuat.ngay_xuat) = ? AND YEAR(don_xuat.ngay_xuat) = ? "
+                + "GROUP BY don_xuat.ma_don_xuat";
+        try {
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, ngay);
+            ps.setInt(2, thang);
+            ps.setInt(3, nam);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                DonXuat ptu = new DonXuat();
+
+                ptu.setMaDonXuat(rs.getString("ma_don_xuat"));
+                ptu.setTongTien(rs.getFloat("tong_tien"));
+
+                danhsach.add(ptu);
+            }
+
+            rs.close();
+            ps.close();
+            connect.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhsach;
+    }
 }

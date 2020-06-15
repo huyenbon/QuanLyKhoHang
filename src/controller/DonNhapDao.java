@@ -127,4 +127,53 @@ public class DonNhapDao extends Dao {
         }
         return false;
     }
+    
+    /**
+     * Thống kê theo quý
+     * @param quy
+     * @param nam
+     * @return 
+     */
+    public ArrayList<DonNhap> thongKeTheoQuy(int quy, int nam) {
+        ArrayList<DonNhap> danhsach = new ArrayList<>();
+        String thang = null;
+        switch(quy) {
+            case 1: 
+                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 0 AND 2 ";
+                break;
+            case 2: 
+                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 3 AND 5 ";
+                break;
+            case 3: 
+                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 6 AND 8 ";
+                break;
+            case 4: 
+                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 9 AND 11 ";
+                break;
+        }
+        String sql = "SELECT don_nhap.ma_don_nhap, don_nhap.ma_don_dh, SUM(ct_don_nhap.so_luong_nhap * ct_don_nhap.don_gia_nhap) 'tong_tien' "
+                + "FROM don_nhap INNER JOIN ct_don_nhap ON don_nhap.ma_don_nhap = ct_don_nhap.ma_don_nhap WHERE YEAR(don_nhap.ngay_nhap) = ? AND" + thang
+                + "GROUP BY YEAR(don_nhap.ngay_nhap), MONTH(don_nhap.ngay_nhap)";
+        try {
+            PreparedStatement ps = connect.prepareStatement(sql);
+            ps.setInt(1, nam);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                DonNhap ptu = new DonNhap();
+
+                ptu.setMaDonNhap(rs.getString("ma_don_nhap"));
+                ptu.setMaDonDH(rs.getString("ma_don_dh"));
+                ptu.setTongTien(rs.getFloat("tong_tien"));
+
+                danhsach.add(ptu);
+            }
+
+            rs.close();
+            ps.close();
+            connect.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return danhsach;
+    }
 }

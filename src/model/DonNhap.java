@@ -10,6 +10,7 @@ public class DonNhap {
     private String maDonNhap;
     private Date ngayNhap;
     private String maDonDH;
+    private float tongTien;
 
     public DonNhap() {
     }
@@ -42,5 +43,13 @@ public class DonNhap {
 
     public void setMaDonDH(String maDonDH) {
         this.maDonDH = maDonDH;
+    }
+
+    public float getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(float tongTien) {
+        this.tongTien = tongTien;
     }
 }

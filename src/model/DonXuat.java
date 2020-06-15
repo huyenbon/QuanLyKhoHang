@@ -10,6 +10,7 @@ public class DonXuat {
     private String maDonXuat;
     private Date ngayXuat;
     private String maKhachHang;
+    private float tongTien;
 
     public DonXuat() {
     }
@@ -42,5 +43,13 @@ public class DonXuat {
 
     public void setMaKhachHang(String maKhachHang) {
         this.maKhachHang = maKhachHang;
+    }
+
+    public float getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(float tongTien) {
+        this.tongTien = tongTien;
     }
 }
