@@ -111,7 +111,7 @@ public class CTDonXuatFrame extends javax.swing.JDialog {
 
         jLabel1.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Chi tiết đơn hàng nhập");
+        jLabel1.setText("Chi tiết đơn hàng xuất");
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jLabel2.setText("Sản phẩm");
@@ -119,7 +119,7 @@ public class CTDonXuatFrame extends javax.swing.JDialog {
         cbSanPham.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel3.setText("Số lượng nhập");
+        jLabel3.setText("Số lượng xuất");
 
         txtSoLuong.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
 
@@ -166,7 +166,7 @@ public class CTDonXuatFrame extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblDanhSach);
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel4.setText("Đơn giá nhập");
+        jLabel4.setText("Đơn giá xuất");
 
         txtDonGia.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
 
@@ -291,7 +291,7 @@ public class CTDonXuatFrame extends javax.swing.JDialog {
             CTDonXuat ptu = dsCTDonXuat.get(viTri);
             int index = 0;
             for (int i = 0; i < dsSanPham.size(); i++) {
-                if(ptu.getMaSanPham() == dsSanPham.get(i).getMaSanPham()) {
+                if(ptu.getMaSanPham().equals(dsSanPham.get(i).getMaSanPham())) {
                     index = i;
                     break;
                 }

@@ -50,10 +50,11 @@ public class NhanVienFrame extends javax.swing.JFrame {
      * @param trangThaiCapNhat
      * @param trangThaiXoa
      */
-    public void thayDoiTrangThaiButton(boolean trangThaiThemMoi, boolean trangThaiCapNhat, boolean trangThaiXoa) {
+    public void thayDoiTrangThaiButton(boolean trangThaiThemMoi, boolean trangThaiCapNhat, boolean trangThaiXoa, boolean trangThaiTimKiem) {
         btnThemMoi.setEnabled(trangThaiThemMoi);
         btnCapNhat.setEnabled(trangThaiCapNhat);
         btnXoa.setEnabled(trangThaiXoa);
+        btnTimKiem.setEnabled(trangThaiTimKiem);
     }
 
     /**
@@ -72,6 +73,8 @@ public class NhanVienFrame extends javax.swing.JFrame {
         btnXoa = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDanhSach = new javax.swing.JTable();
+        btnTimKiem = new javax.swing.JButton();
+        txtTimKiem = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lý nhân viên");
@@ -131,12 +134,24 @@ public class NhanVienFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblDanhSach);
 
+        btnTimKiem.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btnTimKiem.setText("Tìm kiếm");
+        btnTimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(32, 32, 32)
+                .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,10 +177,13 @@ public class NhanVienFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnQuayLai, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnThemMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTimKiem)
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
                 .addContainerGap())
@@ -178,9 +196,9 @@ public class NhanVienFrame extends javax.swing.JFrame {
         viTri = tblDanhSach.getSelectedRow();
 
         if (viTri > -1) {
-            thayDoiTrangThaiButton(false, true, true);
+            thayDoiTrangThaiButton(false, true, true, false);
         } else {
-            thayDoiTrangThaiButton(true, false, false);
+            thayDoiTrangThaiButton(true, false, false, true);
         }
     }//GEN-LAST:event_tblDanhSachMouseClicked
 
@@ -211,8 +229,30 @@ public class NhanVienFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Xuất hiện lỗi!");
             }
         }
-        thayDoiTrangThaiButton(true, false, false);
+        thayDoiTrangThaiButton(true, false, false,true);
     }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemActionPerformed
+        String query = txtTimKiem.getText().trim();
+
+        danhsach = new NhanVienDao().TimKiem(query);
+
+        if (!"".equals(query) && query != null) {
+            if (danhsach.size() > 0) {
+                model.setRowCount(0);
+                for (NhanVien ptu : danhsach) {
+                    model.addRow(new Object[]{
+                         model.getRowCount() + 1, ptu.getMaNhanVien(), ptu.getTenNhanVien(), new SimpleDateFormat("dd/MM/yyyy").format(ptu.getNgaySinh()), ptu.getDiaChi(), ptu.getCMND()
+                    });
+                }
+            } else {
+                model.setRowCount(0);
+                JOptionPane.showMessageDialog(rootPane, "Không tìm thấy kết quả");
+            }
+        } else {
+            hienThiDanhSach();
+        }
+    }//GEN-LAST:event_btnTimKiemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,9 +293,11 @@ public class NhanVienFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnCapNhat;
     private javax.swing.JButton btnQuayLai;
     private javax.swing.JButton btnThemMoi;
+    private javax.swing.JButton btnTimKiem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDanhSach;
+    private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

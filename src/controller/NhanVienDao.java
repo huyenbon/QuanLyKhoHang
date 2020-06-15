@@ -134,4 +134,32 @@ public class NhanVienDao extends Dao {
         }
         return false;
     }
+     public ArrayList<NhanVien> TimKiem(String query) {
+        ArrayList<NhanVien> danhsach = new ArrayList<>();
+        String sql = "SELECT * FROM " + table + " WHERE ma_nhan_vien = '" + query + "'";
+        
+        try {
+            Statement sm = connect.createStatement();
+            ResultSet rs = sm.executeQuery(sql);
+
+            while (rs.next()) {
+                NhanVien ptu = new NhanVien();
+
+                ptu.setMaNhanVien(rs.getString("ma_nhan_vien"));
+                ptu.setTenNhanVien(rs.getString("ten_nhan_vien"));
+                ptu.setNgaySinh(rs.getDate("ngay_sinh"));
+                ptu.setDiaChi(rs.getString("dia_chi"));
+                ptu.setCMND(rs.getString("CMND"));
+
+                danhsach.add(ptu);
+            }
+            rs.close();
+            sm.close();
+            connect.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return danhsach;
+    }
 }

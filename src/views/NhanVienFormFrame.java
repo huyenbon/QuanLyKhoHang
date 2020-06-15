@@ -263,7 +263,7 @@ public class NhanVienFormFrame extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Xảy ra lỗi!");
                 }
             }
-            home.thayDoiTrangThaiButton(true, false, false);
+            home.thayDoiTrangThaiButton(true, false, false,true);
         }
     }//GEN-LAST:event_btnLuuActionPerformed
 

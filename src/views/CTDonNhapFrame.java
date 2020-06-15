@@ -291,7 +291,7 @@ public class CTDonNhapFrame extends javax.swing.JDialog {
             CTDonNhap ptu = dsCTDonNhap.get(viTri);
             int index = 0;
             for (int i = 0; i < dsSanPham.size(); i++) {
-                if(ptu.getMaSanPham() == dsSanPham.get(i).getMaSanPham()) {
+                if(ptu.getMaSanPham().equals(dsSanPham.get(i).getMaSanPham())) {
                     index = i;
                     break;
                 }

@@ -139,16 +139,16 @@ public class DonNhapDao extends Dao {
         String thang = null;
         switch(quy) {
             case 1: 
-                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 0 AND 2 ";
+                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 1 AND 3 ";
                 break;
             case 2: 
-                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 3 AND 5 ";
+                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 4 AND 6 ";
                 break;
             case 3: 
-                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 6 AND 8 ";
+                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 7 AND 10 ";
                 break;
             case 4: 
-                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 9 AND 11 ";
+                thang = " MONTH(don_nhap.ngay_nhap) BETWEEN 10 AND 12 ";
                 break;
         }
         String sql = "SELECT don_nhap.ma_don_nhap, don_nhap.ma_don_dh, SUM(ct_don_nhap.so_luong_nhap * ct_don_nhap.don_gia_nhap) 'tong_tien' "
